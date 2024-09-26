@@ -77,7 +77,7 @@ There are two ways to insert data into the tables:
 2. **Using CH Proxy**:
    You can use CH Proxy to automatically detect and avoid sending requests to nodes that are down. Here's an example of inserting data through the proxy:
     ```bash
-    curl -u admin_1S_2R:1 -X POST http://127.0.0.1:80/ -d "INSERT INTO db3.table1 VALUES (1, 'abc')"
+    curl -u admin_1S_2R:1 -X POST http://127.0.0.1:80/ -d "INSERT INTO test.my_table VALUES (1, 'abc')"
     ```
 
    - `admin_1S_2R`: Username set in the `config.yml` file for CH Proxy.
@@ -88,7 +88,7 @@ There are two ways to insert data into the tables:
 
 To query data and see which node executed the query:
 ```bash
-curl -u admin_1S_2R:1 -X POST http://127.0.0.1:80/ -d "SELECT hostName(), * FROM db3.table1 LIMIT 1"
+curl -u admin_1S_2R:1 -X POST http://127.0.0.1:80/ -d "SELECT hostName(), * FROM test.my_table LIMIT 1"
 ‍‍‍
 ```
 The `hostName()` function returns the name of the node that executed the query.
