@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  ch-proxy:
+    image: contentsquareplatform/chproxy:v1.26.4
+    platform: linux/amd64
+    container_name: ch-proxy
+    hostname: ch-proxy
+    networks:
+      cluster_1S_2R_ch_proxy:
+        ipv4_address: 172.23.0.8
+    ports:
+      - "127.0.0.1:443:443"
+      - "127.0.0.1:80:80"
+    volumes:
+      - ./config/config.yml:/opt/config.yml
+
+    command: [-config, /opt/config.yml]
+             
+networks:
+  cluster_1S_2R_ch_proxy:
+    name: cluster_1S_2R_ch_proxy
+    ipam:
+      config:
+        - subnet: 172.23.0.0/24
+
+  clickhouse_network:
+    driver: bridge
+    name: clickhouse_network
+    external: true

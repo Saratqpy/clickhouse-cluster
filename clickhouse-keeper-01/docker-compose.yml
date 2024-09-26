@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+
+  clickhouse-keeper-01:
+    image: "clickhouse/clickhouse-keeper:${CHKVER:-latest-alpine}"
+    user: "101:101"
+    container_name: clickhouse-keeper-01
+    hostname: clickhouse-keeper-01
+    volumes:
+     - ./fs/volumes/clickhouse-keeper-01/etc/clickhouse-keeper/keeper_config.xml:/etc/clickhouse-keeper/keeper_config.xml
+    ports:
+      - "127.0.0.1:9181:9181"
+    networks:
+      clickhouse_network:
+      cluster_1S_2R_ch_proxy:
+        ipv4_address: 172.23.0.11
+
+
+networks:
+  clickhouse_network:
+    driver: bridge
+    name: clickhouse_network
+    external: true
+
+  cluster_1S_2R_ch_proxy:
+    name: cluster_1S_2R_ch_proxy
+    ipam:
+      config:
+        - subnet: 172.23.0.0/24

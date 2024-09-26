@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+  clickhouse-02:
+    image: "clickhouse/clickhouse-server:${CHVER:-latest}"
+    user: "101:101"
+    container_name: clickhouse-02
+    hostname: clickhouse-02
+    volumes:
+      - ./fs/volumes/clickhouse-02/etc/clickhouse-server/config.d/config.xml:/etc/clickhouse-server/config.d/config.xml
+      - ./fs/volumes/clickhouse-02/etc/clickhouse-server/users.d/users.xml:/etc/clickhouse-server/users.d/users.xml
+      - clickhouse_data:/var/lib/clickhouse
+
+    ports:
+      - "127.0.0.1:8124:8123"
+      - "127.0.0.1:9001:9000"
+
+    
+    networks:
+      clickhouse_network:
+      cluster_1S_2R_ch_proxy:
+        ipv4_address: 172.23.0.13
+
+networks:
+  clickhouse_network:
+    driver: bridge
+    name: clickhouse_network
+    external: true
+
+  cluster_1S_2R_ch_proxy:
+    name: cluster_1S_2R_ch_proxy
+    ipam:
+      config:
+        - subnet: 172.23.0.0/24
+
+volumes:
+  clickhouse_data:
+    driver: local
