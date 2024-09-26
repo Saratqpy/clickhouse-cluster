@@ -41,19 +41,19 @@ This project sets up a **ClickHouse Cluster** with one shard and two replicas us
 
 2. Create a replicated table across the cluster:
     ```sql
-    CREATE TABLE test.gsc ON CLUSTER cluster_1S_2R (
+    CREATE TABLE test.my_table ON CLUSTER cluster_1S_2R (
         id UInt32,
         name String
-    ) ENGINE = ReplicatedMergeTree('/clickhouse/tables/{shard}/gsc', '{replica}') 
+    ) ENGINE = ReplicatedMergeTree('/clickhouse/tables/{shard}/my_table', '{replica}') 
     ORDER BY id;
     ```
 
-    This uses the `ReplicatedMergeTree` engine to maintain a copy of the data across replicas. The table is named `gsc`.
+    This uses the `ReplicatedMergeTree` engine to maintain a copy of the data across replicas. The table is named `my_table`.
 
 3. Create a distributed table:
     ```sql
-    CREATE TABLE test.my_table_distributed ON CLUSTER cluster_1S_2R AS test.gsc
-    ENGINE = Distributed(cluster_1S_2R, test, gsc, rand());
+    CREATE TABLE test.my_table_distributed ON CLUSTER cluster_1S_2R AS test.my_table
+    ENGINE = Distributed(cluster_1S_2R, test, my_table, rand());
     ```
 
     This will distribute data across shards, ensuring that if multiple shards exist, tables in the same shard hold the same data.
