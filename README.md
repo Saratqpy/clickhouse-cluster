@@ -93,11 +93,3 @@ curl -u admin_1S_2R:1 -X POST http://127.0.0.1:80/ -d "SELECT hostName(), * FROM
 ```
 The `hostName()` function returns the name of the node that executed the query.
 
-## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
-
-## Contributing
-Feel free to open issues or submit pull requests for any improvements or new features.
-
-## Contact
-For any questions or feedback, please reach out via [email](saratqp7@gmail.com).
